@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Due-Na-Diay - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-mark">D</div>
+                <div>
+                    <p class="brand-name">Due-Na-Diay</p>
+                    <span class="brand-tag">Student planner</span>
+                </div>
+            </div>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <a class="nav-link active" href="index.html">Dashboard</a>
+                <a class="nav-link" href="tasks.html">Tasks</a>
+                <a class="nav-link" href="subjects.html">Subjects</a>
+                <a class="nav-link" href="planner.html">Planner</a>
+            </nav>
+
+            <div class="sidebar-panel">
+                <p class="label">This week</p>
+                <strong id="weekFocus">3 deadlines</strong>
+                <p>Keep the priority list moving.</p>
+            </div>
+        </aside>
+
+        <main class="page-content">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">Overview</p>
+                    <h1>Dashboard</h1>
+                </div>
+                <a class="primary-btn" href="tasks.html?new=1">Add task</a>
+            </header>
+
+            <section class="stats-grid" aria-label="Academic statistics">
+                <div class="stat-card stat-card-accent">
+                    <p>Active tasks</p>
+                    <strong id="activeTasks">0</strong>
+                </div>
+                <div class="stat-card">
+                    <p>Due today</p>
+                    <strong id="dueToday">0</strong>
+                </div>
+                <div class="stat-card">
+                    <p>Overdue</p>
+                    <strong id="overdueTasks">0</strong>
+                </div>
+                <div class="stat-card">
+                    <p>Completed</p>
+                    <strong id="completedTasks">0</strong>
+                </div>
+                <div class="stat-card">
+                    <p>Completion rate</p>
+                    <strong id="completionRate">0%</strong>
+                </div>
+            </section>
+
+            <div class="dashboard-grid">
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2>Priority tasks</h2>
+                        <a href="tasks.html">View all</a>
+                    </div>
+                    <div id="priorityTasks" class="task-list"></div>
+                </section>
+
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2>Upcoming deadlines</h2>
+                        <a href="planner.html">Planner</a>
+                    </div>
+                    <div id="upcomingTasks" class="mini-list"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Due-Na-Diay - Subjects</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-mark">D</div>
+                <div>
+                    <p class="brand-name">Due-Na-Diay</p>
+                    <span class="brand-tag">Student planner</span>
+                </div>
+            </div>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <a class="nav-link" href="index.html">Dashboard</a>
+                <a class="nav-link" href="tasks.html">Tasks</a>
+                <a class="nav-link active" href="subjects.html">Subjects</a>
+                <a class="nav-link" href="planner.html">Planner</a>
+            </nav>
+        </aside>
+
+        <main class="page-content">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">Academic list</p>
+                    <h1>Subjects</h1>
+                </div>
+                <button id="newSubjectButton" class="primary-btn" type="button">Add subject</button>
+            </header>
+
+            <section class="panel">
+                <div class="panel-header">
+                    <h2>Subject overview</h2>
+                    <span class="label">Semester</span>
+                </div>
+                <div id="subjectsGrid" class="subject-grid"></div>
+            </section>
+        </main>
+    </div>
+
+    <div id="subjectModal" class="modal-overlay" hidden>
+        <div class="modal-card">
+            <div class="panel-header">
+                <h2 id="subjectModalTitle">Add subject</h2>
+                <button type="button" class="secondary-btn" id="closeSubjectModal">Close</button>
+            </div>
+
+            <form id="subjectForm">
+                <input type="hidden" id="subjectId" value="">
+
+                <div class="form-grid">
+                    <div class="field full">
+                        <label for="subjectName">Subject name</label>
+                        <input id="subjectName" name="name" type="text" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="subjectCode">Subject code</label>
+                        <input id="subjectCode" name="code" type="text" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="subjectInstructor">Instructor</label>
+                        <input id="subjectInstructor" name="instructor" type="text" required>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="deleteSubjectButton" class="danger-btn" hidden>Delete</button>
+                    <div class="form-actions-right">
+                        <button type="button" class="secondary-btn" id="cancelSubjectModal">Cancel</button>
+                        <button type="submit" class="primary-btn">Save subject</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/subjects.js"></script>
+</body>
+</html>

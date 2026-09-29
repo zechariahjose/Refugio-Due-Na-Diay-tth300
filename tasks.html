@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Due-Na-Diay - Tasks</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-mark">D</div>
+                <div>
+                    <p class="brand-name">Due-Na-Diay</p>
+                    <span class="brand-tag">Student planner</span>
+                </div>
+            </div>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <a class="nav-link" href="index.html">Dashboard</a>
+                <a class="nav-link active" href="tasks.html">Tasks</a>
+                <a class="nav-link" href="subjects.html">Subjects</a>
+                <a class="nav-link" href="planner.html">Planner</a>
+            </nav>
+        </aside>
+
+        <main class="page-content">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">Task list</p>
+                    <h1>Tasks</h1>
+                </div>
+                <button id="newTaskButton" class="primary-btn" type="button">New task</button>
+            </header>
+
+            <section class="panel page-toolbar" aria-label="Task filters">
+                <div class="filter-group">
+                    <button class="chip active" type="button" data-filter="all">All</button>
+                    <button class="chip" type="button" data-filter="not-started">Pending</button>
+                    <button class="chip" type="button" data-filter="in-progress">In progress</button>
+                    <button class="chip" type="button" data-filter="completed">Completed</button>
+                </div>
+
+                <div class="search-box">
+                    <input id="taskSearchInput" type="search" placeholder="Search task title">
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-header">
+                    <h2>Academic tasks</h2>
+                    <span class="label">Overview</span>
+                </div>
+
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Subject</th>
+                                <th>Deadline</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody id="taskTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="taskModal" class="modal-overlay" hidden>
+        <div class="modal-card">
+            <div class="panel-header">
+                <h2 id="taskModalTitle">Add task</h2>
+                <button type="button" class="secondary-btn" id="closeTaskModal">Close</button>
+            </div>
+
+            <form id="taskForm">
+                <input type="hidden" id="taskId" value="">
+
+                <div class="form-grid">
+                    <div class="field full">
+                        <label for="taskTitle">Task title</label>
+                        <input id="taskTitle" name="title" type="text" required>
+                    </div>
+
+                    <div class="field full">
+                        <label for="taskDescription">Description</label>
+                        <textarea id="taskDescription" name="description" rows="3"></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label for="taskSubject">Subject</label>
+                        <select id="taskSubject" name="subjectId"></select>
+                    </div>
+
+                    <div class="field">
+                        <label for="taskDeadline">Deadline</label>
+                        <input id="taskDeadline" name="deadline" type="date">
+                    </div>
+
+                    <div class="field">
+                        <label for="taskPriority">Priority</label>
+                        <select id="taskPriority" name="priority">
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="taskStatus">Status</label>
+                        <select id="taskStatus" name="status">
+                            <option value="not-started">Not started</option>
+                            <option value="in-progress">In progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+
+                    <div class="field full">
+                        <label for="taskProgress">Progress (%)</label>
+                        <input id="taskProgress" name="progress" type="number" min="0" max="100" value="0">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="deleteTaskButton" class="danger-btn" hidden>Delete</button>
+                    <div class="form-actions-right">
+                        <button type="button" class="secondary-btn" id="cancelTaskModal">Cancel</button>
+                        <button type="submit" class="primary-btn">Save task</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/tasks.js"></script>
+</body>
+</html>

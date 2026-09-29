@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Due-Na-Diay - Planner</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-mark">D</div>
+                <div>
+                    <p class="brand-name">Due-Na-Diay</p>
+                    <span class="brand-tag">Student planner</span>
+                </div>
+            </div>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <a class="nav-link" href="index.html">Dashboard</a>
+                <a class="nav-link" href="tasks.html">Tasks</a>
+                <a class="nav-link" href="subjects.html">Subjects</a>
+                <a class="nav-link active" href="planner.html">Planner</a>
+            </nav>
+        </aside>
+
+        <main class="page-content">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">Schedule</p>
+                    <h1>Study planner</h1>
+                </div>
+                <button id="newSessionButton" class="primary-btn" type="button">New session</button>
+            </header>
+
+            <section class="panel">
+                <div class="panel-header">
+                    <h2>Weekly plan</h2>
+                    <span class="label">Upcoming</span>
+                </div>
+                <div id="plannerWeek" class="week-grid"></div>
+            </section>
+        </main>
+    </div>
+
+    <div id="sessionModal" class="modal-overlay" hidden>
+        <div class="modal-card">
+            <div class="panel-header">
+                <h2 id="sessionModalTitle">Add session</h2>
+                <button type="button" class="secondary-btn" id="closeSessionModal">Close</button>
+            </div>
+
+            <form id="sessionForm">
+                <input type="hidden" id="sessionId" value="">
+
+                <div class="form-grid">
+                    <div class="field full">
+                        <label for="sessionTopic">Topic</label>
+                        <input id="sessionTopic" name="topic" type="text" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="sessionSubject">Subject</label>
+                        <select id="sessionSubject" name="subjectId"></select>
+                    </div>
+
+                    <div class="field">
+                        <label for="sessionDate">Date</label>
+                        <input id="sessionDate" name="date" type="date" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="sessionStartTime">Start time</label>
+                        <input id="sessionStartTime" name="startTime" type="time" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="sessionDuration">Duration (minutes)</label>
+                        <input id="sessionDuration" name="duration" type="number" min="15" step="15" value="60" required>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="deleteSessionButton" class="danger-btn" hidden>Delete</button>
+                    <div class="form-actions-right">
+                        <button type="button" class="secondary-btn" id="cancelSessionModal">Cancel</button>
+                        <button type="submit" class="primary-btn">Save session</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/planner.js"></script>
+</body>
+</html>
