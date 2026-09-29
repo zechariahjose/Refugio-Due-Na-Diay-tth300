@@ -279,8 +279,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    populateSubjectOptions();
-    renderTasks();
+        window.wkkDataReady.then(() => {
+            populateSubjectOptions();
+            renderTasks();
+        });
 
     if (new URLSearchParams(window.location.search).has("new")) {
         openTaskModal();

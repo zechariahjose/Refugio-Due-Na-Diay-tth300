@@ -176,5 +176,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    renderSubjects();
+    window.wkkDataReady.then(renderSubjects);
 });

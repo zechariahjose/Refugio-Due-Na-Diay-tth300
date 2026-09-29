@@ -207,6 +207,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    populateSubjectOptions();
-    renderPlanner();
+    window.wkkDataReady.then(() => {
+        populateSubjectOptions();
+        renderPlanner();
+    });
 });

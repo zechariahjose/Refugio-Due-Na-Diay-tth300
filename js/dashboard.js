@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     refreshDashboard();
     window.addEventListener("wkk:data-updated", refreshDashboard);
+    window.wkkDataReady.then(refreshDashboard);
 });
 
 function refreshDashboard() {

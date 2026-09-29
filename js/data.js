@@ -5,6 +5,9 @@ const STORAGE_KEYS = {
     initialized: "wkk_initialized"
 };
 
+let databaseReady = false;
+let persistenceQueue = Promise.resolve();
+
 function loadFromStorage(key, fallback) {
     const storedValue = localStorage.getItem(key);
 
@@ -25,19 +28,44 @@ function notifyDataUpdated() {
     }
 }
 
+function persistCollection(resource, items) {
+    if (!databaseReady) return Promise.resolve();
+
+    persistenceQueue = persistenceQueue.then(async () => {
+        try {
+            const response = await fetch(`/api/${resource}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(items)
+            });
+            if (!response.ok) {
+                const result = await response.json().catch(() => ({}));
+                throw new Error(result.error || `HTTP ${response.status}`);
+            }
+        } catch (error) {
+            console.error(`Could not save ${resource} to the database:`, error);
+        }
+    });
+
+    return persistenceQueue;
+}
+
 function saveSubjects(subjects) {
     localStorage.setItem(STORAGE_KEYS.subjects, JSON.stringify(subjects));
     notifyDataUpdated();
+    persistCollection("subjects", subjects);
 }
 
 function saveTasks(tasks) {
     localStorage.setItem(STORAGE_KEYS.tasks, JSON.stringify(tasks));
     notifyDataUpdated();
+    persistCollection("tasks", tasks);
 }
 
 function saveStudySessions(studySessions) {
     localStorage.setItem(STORAGE_KEYS.studySessions, JSON.stringify(studySessions));
     notifyDataUpdated();
+    persistCollection("studySessions", studySessions);
 }
 
 function getSubjects() {
@@ -161,3 +189,42 @@ function initializeData() {
 }
 
 initializeData();
+
+async function loadDatabaseData() {
+    try {
+        const [subjectsResponse, tasksResponse, sessionsResponse] = await Promise.all([
+            fetch("/api/subjects"),
+            fetch("/api/tasks"),
+            fetch("/api/studySessions")
+        ]);
+        if (![subjectsResponse, tasksResponse, sessionsResponse].every(response => response.ok)) {
+            throw new Error("The API returned an error while loading data.");
+        }
+
+        const [subjects, tasks, studySessions] = await Promise.all([
+            subjectsResponse.json(),
+            tasksResponse.json(),
+            sessionsResponse.json()
+        ]);
+        const databaseIsEmpty = !subjects.length && !tasks.length && !studySessions.length;
+
+        if (databaseIsEmpty) {
+            databaseReady = true;
+            await persistCollection("subjects", getSubjects());
+            await persistCollection("tasks", getTasks());
+            await persistCollection("studySessions", getStudySessions());
+        } else {
+            localStorage.setItem(STORAGE_KEYS.subjects, JSON.stringify(subjects.map(item => ({ ...item, id: Number(item.id) }))));
+            localStorage.setItem(STORAGE_KEYS.tasks, JSON.stringify(tasks.map(item => ({ ...item, id: Number(item.id), subjectId: Number(item.subjectId) || 0 }))));
+            localStorage.setItem(STORAGE_KEYS.studySessions, JSON.stringify(studySessions.map(item => ({ ...item, id: Number(item.id), subjectId: Number(item.subjectId) || 0, duration: Number(item.duration) }))));
+            databaseReady = true;
+        }
+    } catch (error) {
+        databaseReady = true;
+        console.warn("Using browser storage because the SQL API could not be reached:", error.message);
+    }
+
+    notifyDataUpdated();
+}
+
+window.wkkDataReady = loadDatabaseData();
